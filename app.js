@@ -78,7 +78,7 @@ app.get('/version', function(req, res) {
         'Content-Type' : 'application/json'
     });
     res.write(JSON.stringify({
-        version : '0.0.1'
+        version : '0.1.0'
     }));
     res.end();
 });
@@ -86,9 +86,10 @@ app.get('/version', function(req, res) {
 app.get('/image', function(req, res) {
     var options = JSON.parse(req.query.options);
     //console.log(options);
-    //options.bgColor = utils.hexToRgb(options.bgColor);
-    //options.textColor = utils.hexToRgb(options.textColor);
-
+    options.bgColor = utils.hexToRgb(options.bgColor);
+    options.textColor = utils.hexToRgb(options.textColor);
+    options.width = 128;
+    options.height = 128;
     //console.log(JSON.stringify(options));
     var streamCanvas = function(img) {
         var canvas = new Canvas(options.width, options.height);
@@ -109,7 +110,7 @@ app.get('/image', function(req, res) {
         ////
         var stream = canvas.pngStream();
         res.writeHead(200, {
-            'Cache-Control' : 'max-age=1',
+            'Cache-Control' : 'max-age=31536000',
             'Content-Type' : 'image/png'
         });
 
@@ -132,7 +133,6 @@ app.get('/image', function(req, res) {
                 img.src = data;
                 options.width = img.width;
                 options.height = img.height;
-
                 streamCanvas(img);
             }
         });
