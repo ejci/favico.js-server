@@ -4,28 +4,37 @@
         <link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8080/favicon512.png">
     </head>
     <body>
-        <img id="image" src="">
+        <img id="image" src="http://lab.ejci.net/favico.js/favicon100.ico">
         <hr/>
         <!--img src="favicon512.png"-->
         <script src="favico.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var icon = document.getElementById('image');
-                image.src = 'http://localhost:3000/image?options=' + encodeURIComponent(JSON.stringify({
-                //image.src = 'http://favico.jit.su/image?options=' + encodeURIComponent(JSON.stringify({
-                    //url : 'http://lab.ejci.net/favico.js/favicon100.ico',
-                    url : 'http://localhost:8080/favicon512.png',
-                    bgColor : '#dd0000',
-                    textColor : '#ffffff',
-                    fontFamily : 'FontAwesome',
-                    fontStyle : 'bold',
-                    position : 'down',
-                    type : 'circle',
-                    animation : 'slide',
-                    badge : '\uf18e'
+                /*
+                //image.src = 'http://localhost:3000/image?options=' + encodeURIComponent(JSON.stringify({
+                image.src = 'http://favico.jit.su/image?options=' + encodeURIComponent(JSON.stringify({
+                url : 'http://lab.ejci.net/favico.js/favicon32.ico',
+                //url : 'http://localhost:8080/favicon512.png',
+                bgColor : '#dd0000',
+                textColor : '#ffffff',
+                fontFamily : 'FontAwesome',
+                fontStyle : 'bold',
+                position : 'down',
+                type : 'circle',
+                animation : 'slide',
+                badge : '\uf18e'
 
-                }));
-                console.log(image.src);
+                }));*/
+                //var favico = new Favico({fontFamily : 'FontAwesome'});
+                //favico.badge('\uf18e');
+                var favico = new Favico({fontFamily : 'FontAwesome'});
+                favico.badge('\uf18e');
+
+                //var favicoImage = new Favico({elementId:'image'});
+                //favicoImage.badge(3);
+
+                //console.log(image.src);
             });
         </script>
     </body>

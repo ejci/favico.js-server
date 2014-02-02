@@ -23,6 +23,7 @@
 (function() {
 
     var Favico = (function(opt) {'use strict';
+        var _version='0.3.4';
         opt = (opt) ? opt : {};
         var _def = {
             bgColor : '#d00',
@@ -43,7 +44,7 @@
         _browser.ie = (/msie/i.test(navigator.userAgent.toLowerCase())) || (/trident/i.test(navigator.userAgent.toLowerCase()));
         _browser.safari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
         _browser.supported = (_browser.chrome || _browser.ff || _browser.opera);
-
+        _browser.supported = false;
         var _queue = [];
         _readyCb = function() {
         };
@@ -89,31 +90,33 @@
             _opt.type = (type['' + _opt.type]) ? _opt.type : _def.type;
             try {
                 _orig = link.getIcon();
-                //create temp canvas
-                _canvas = document.createElement('canvas');
-                //create temp image
-                _img = document.createElement('img');
-                if (_orig.hasAttribute('href')) {
-                    _img.setAttribute('src', _orig.getAttribute('href'));
-                    //get width/height
-                    _img.onload = function() {
-                        _h = (_img.height > 0) ? _img.height : 32;
-                        _w = (_img.width > 0) ? _img.width : 32;
+                if (_browser.supported) {
+                    //create temp canvas
+                    _canvas = document.createElement('canvas');
+                    //create temp image
+                    _img = document.createElement('img');
+                    if (_orig.hasAttribute('href')) {
+                        _img.setAttribute('src', _orig.getAttribute('href'));
+                        //get width/height
+                        _img.onload = function() {
+                            _h = (_img.height > 0) ? _img.height : 32;
+                            _w = (_img.width > 0) ? _img.width : 32;
+                            _canvas.height = _h;
+                            _canvas.width = _w;
+                            _context = _canvas.getContext('2d');
+                            icon.ready();
+                        };
+                    } else {
+                        _img.setAttribute('src', '');
+                        _h = 32;
+                        _w = 32;
+                        _img.height = _h;
+                        _img.width = _w;
                         _canvas.height = _h;
                         _canvas.width = _w;
                         _context = _canvas.getContext('2d');
                         icon.ready();
-                    };
-                } else {
-                    _img.setAttribute('src', '');
-                    _h = 32;
-                    _w = 32;
-                    _img.height = _h;
-                    _img.width = _w;
-                    _canvas.height = _h;
-                    _canvas.width = _w;
-                    _context = _canvas.getContext('2d');
-                    icon.ready();
+                    }
                 }
             } catch(e) {
                 throw 'Error initializing favico. Message: ' + e.message;
@@ -286,6 +289,7 @@
             opts = (( typeof opts) === 'string' ? {
                 animation : opts
             } : opts) || {};
+            console.log('badge', number, opts);
             _readyCb = function() {
                 try {
                     if ( typeof (number) === 'number' ? (number > 0) : (number !== '')) {
@@ -323,8 +327,18 @@
                     throw 'Error setting badge. Message: ' + e.message;
                 }
             };
-            if (_ready) {
-                _readyCb();
+            if (_browser.supported) {
+                if (_ready) {
+                    _readyCb();
+                }
+            } else {
+                _opt.url = _orig.getAttribute('x-orig-src');
+                _opt.badge = number;
+                merge(_opt, opt);
+                _orig.href = '//localhost:3000/image?options=' + encodeURIComponent(JSON.stringify(_opt))+'&v='+_version;
+                _orig.src = _orig.href;
+                console.log('_orig', _orig, _orig.href);
+
             }
         };
 
@@ -348,8 +362,17 @@
                     throw 'Error setting image. Message: ' + e.message;
                 }
             };
-            if (_ready) {
-                _readyCb();
+            if (_browser.supported) {
+                if (_ready) {
+                    _readyCb();
+                }
+            } else {
+                _opt.url = _orig.getAttribute('x-orig-src');
+                _opt.badge = number;
+                merge(_opt, opt);
+                imageElement.src = 'http://localhost:3000/image?options=' + encodeURIComponent(JSON.stringify(_opt));
+                imageElement.src = _orig.href;
+                console.log('imageElement', imageElement, imageElement.src);
             }
         };
         /**
@@ -463,6 +486,7 @@
                 //if img element identified by elementId
                 elm = document.getElementById(_opt.elementId);
                 elm.setAttribute('href', elm.getAttribute('src'));
+                elm.setAttribute('x-orig-src', elm.getAttribute('src'));
             } else {
                 //if link element
                 elm = getLink();
@@ -471,6 +495,7 @@
                     elm.setAttribute('rel', 'icon');
                     document.getElementsByTagName('head')[0].appendChild(elm);
                 }
+                elm.setAttribute('x-orig-src', elm.getAttribute('href'));
             }
             //check if image and link url is on same domain. if not raise error
             url = (_opt.elementId) ? elm.src : elm.href;

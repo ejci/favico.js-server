@@ -1,7 +1,7 @@
 {
 	"name": "favico.js-server",
 	"subdomain": "favico",
-	"version": "0.0.1-3",
+	"version": "0.0.1-4",
 	"description": "Favico.js server",
 	"main": "app.js",
 	"scripts": {
