@@ -3,7 +3,7 @@ More info [here](http://lab.ejci.net/favico.js/).
 
 
 Author [Miroslav Magda](http://blog.ejci.net)
-Version 0.0.1
+Version 0.1.0
 
 
 ##License
