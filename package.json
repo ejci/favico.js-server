@@ -1,22 +1,17 @@
 {
 	"name": "favico.js-server",
 	"subdomain": "favico",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Favico.js server",
 	"main": "app.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"predeploy": "echo This will be run before deploying the app",
-		"postdeploy": "echo This will be run after deploying the app",
 		"start": "app.js"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/ejci/favico.js-server.git"
 	},
-	"keywords": [
-		"favicon"
-	],
+	"keywords": ["favicon"],
 	"author": "Miroslav Magda",
 	"license": "MIT",
 	"bugs": {
@@ -26,7 +21,8 @@
 	"dependencies": {
 		"canvas": "~1.1.3",
 		"request": "~2.33.0",
-		"url": "~0.7.9"
+		"url": "~0.7.9",
+		"imagemagick-stream": "0.1.x"
 	},
 	"devDependencies": {
 		"gulp": "~3.5.2"
