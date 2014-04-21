@@ -1,6 +1,8 @@
 var http = require('http');
 var url = require('url');
 var im = require('imagemagick-stream');
+var fs = require('fs')
+var pck = JSON.parse(fs.readFileSync('package.json', 'utf8'))
 
 //node-canvas
 var Canvas = require('canvas');
@@ -80,7 +82,7 @@ app.get('/version', function(req, res) {
 		'Content-Type' : 'application/json'
 	});
 	res.write(JSON.stringify({
-		version : '0.1.1'
+		version : pck.version
 	}));
 	res.end();
 });
