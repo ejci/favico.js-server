@@ -22,8 +22,16 @@ All code is open source and dual licensed under GPL and MIT. Check the individua
 
 ###Change log
 
-####0.1.0
+#####0.1.1
+* Bugfixes
+
+#####0.1.0
 * First stable version 
 
-####0.0.1
+#####0.0.1
 * Proof of concept 
+
+
+
+####TODO
+* Rewrite icon.js, position.js, type.js, utils.js so they can be shared between pure client side version and server version
